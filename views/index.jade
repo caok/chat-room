@@ -9,4 +9,7 @@ block content
   script(src='/socket.io/socket.io.js')
   script(type='text/javascript')
     //这边的url真正用时需修改为确切地址
-    var socket = io.connect('http://localhost:3000');
+    var server = io.connect('http://localhost:3000');
+    server.on('messages', function (data) {
+      alert(data.hello);
+    });

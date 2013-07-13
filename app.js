@@ -38,4 +38,5 @@ server.listen(app.get('port'), function(){
 
 io.sockets.on('connection', function(client) {
   console.log('Client connected...');
+  client.emit('messages', { hello: 'world' });
 });
