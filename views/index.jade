@@ -20,6 +20,8 @@ block content
     $('#chat_button').click(function() {
       var message = $('#chat_input').val();
       server.emit('messages', message);
+      insertMessage(message);
+      $('input#chat_input').val('');
     });
     server.on('messages', function(data) {
       insertMessage(data);
