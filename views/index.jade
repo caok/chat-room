@@ -1,9 +1,17 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-
+  h2= "Real time web chat"
+  .row-fluid
+    .span2.well
+      h4 在线人员
+    .span10
+      #chat_content.well
+        h3 聊天内容
+        #status
+      .input-append
+        input#chat_input.input-xxlarge(type="text")
+        button.btn#chat_button(type="button") Send
 
 
   script(src='/socket.io/socket.io.js')
