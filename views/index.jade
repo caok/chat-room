@@ -13,11 +13,11 @@ block content
         input#chat_input.input-xxlarge(type="text")
         button.btn#chat_button(type="button") Send
 
-
   script(src='/socket.io/socket.io.js')
   script(type='text/javascript')
     //这边的url真正用时需修改为确切地址
     var server = io.connect('http://localhost:3000');
-    server.on('messages', function (data) {
-      alert(data.hello);
+    $('#chat_button').click(function() {
+      var message = $('#chat_input').val();
+      server.emit('messages', message)
     });
