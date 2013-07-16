@@ -39,14 +39,23 @@ server.listen(app.get('port'), function(){
 io.sockets.on('connection', function(client) {
   console.log('Client connected...');
 
+  //用户上线
   client.on('join', function (name) {
     client.set('nickname', name);
     client.broadcast.emit("messages", name + " joined the chat");
   });
 
+  //发消息
   client.on('messages', function (message) {
     client.get('nickname', function (err, name) {
       client.broadcast.emit("messages", name + ": " + message);
+    });
+  });
+
+  //用户下线
+  client.on('disconnect', function() {
+    client.get('nickname', function (err, name) {
+      client.broadcast.emit("messages", name + " leaved the chat");
     });
   });
 });
