@@ -44,7 +44,8 @@ io.sockets.on('connection', function(client) {
   });
 
   client.on('messages', function (data) {
-    console.log(data);
-    client.broadcast.emit("messages", data);
+    client.get('nickname', function (err, name) {
+      client.broadcast.emit("chat", name + ": " + data);
+    });
   });
 });

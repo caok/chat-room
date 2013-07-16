@@ -19,16 +19,16 @@ block content
     var server = io.connect('http://localhost:3000');
 
     nickname = prompt("What is your nickname?");
-    $('#status').html('Connected to chattr');
+    $('#status').html("<div class='alert alert-success'>Connected to chattr</div>");
     server.emit('join', nickname);
 
     $('#chat_button').click(function() {
       var message = $('#chat_input').val();
       server.emit('messages', message);
-      insertMessage(message);
+      insertMessage("me: " + message);
       $('input#chat_input').val('');
     });
-    server.on('messages', function(data) {
+    server.on('chat', function(data) {
       insertMessage(data);
     });
 
