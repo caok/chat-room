@@ -38,6 +38,11 @@ server.listen(app.get('port'), function(){
 
 io.sockets.on('connection', function(client) {
   console.log('Client connected...');
+
+  client.on('join', function (name) {
+    client.set('nickname', name);
+  });
+
   client.on('messages', function (data) {
     console.log(data);
     client.broadcast.emit("messages", data);

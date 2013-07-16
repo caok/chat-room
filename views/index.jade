@@ -17,6 +17,11 @@ block content
   script(type='text/javascript')
     //这边的url真正用时需修改为确切地址
     var server = io.connect('http://localhost:3000');
+
+    nickname = prompt("What is your nickname?");
+    $('#status').html('Connected to chattr');
+    server.emit('join', nickname);
+
     $('#chat_button').click(function() {
       var message = $('#chat_input').val();
       server.emit('messages', message);
@@ -26,6 +31,7 @@ block content
     server.on('messages', function(data) {
       insertMessage(data);
     });
+
     function insertMessage(data){
       $('div#chat_content').append("<div class='alert'>" + data + "</div>");
     };
