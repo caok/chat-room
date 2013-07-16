@@ -41,11 +41,12 @@ io.sockets.on('connection', function(client) {
 
   client.on('join', function (name) {
     client.set('nickname', name);
+    client.broadcast.emit("messages", name + " joined the chat");
   });
 
-  client.on('messages', function (data) {
+  client.on('messages', function (message) {
     client.get('nickname', function (err, name) {
-      client.broadcast.emit("chat", name + ": " + data);
+      client.broadcast.emit("messages", name + ": " + message);
     });
   });
 });

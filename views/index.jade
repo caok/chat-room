@@ -28,7 +28,7 @@ block content
       insertMessage("me: " + message);
       $('input#chat_input').val('');
     });
-    server.on('chat', function(data) {
+    server.on('messages', function(data) {
       insertMessage(data);
     });
 
