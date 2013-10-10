@@ -36,12 +36,16 @@ server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
+//存储在线用户
+var users = [];
+
 io.sockets.on('connection', function(client) {
   console.log('Client connected...');
 
   //用户上线
   client.on('join', function (name) {
     client.set('nickname', name);
+    users.unshift(name);
     client.broadcast.emit("messages", name + " joined the chat.");
   });
 
@@ -55,6 +59,7 @@ io.sockets.on('connection', function(client) {
   //用户下线
   client.on('disconnect', function() {
     client.get('nickname', function (err, name) {
+      users.splice(users.indexOf(name), 1);
       client.broadcast.emit("messages", name + " leave the chat.");
     });
   });
