@@ -1,3 +1,9 @@
+#chat_content{
+  height: 700px;
+  overflow-x:hidden;
+  overflow-y:scroll;
+}
+
 #users_list ul{
   padding: 0px;
   margin: 0px;
