@@ -1,9 +1,8 @@
 var server = io.connect('http://' + window.location.hostname + ':3000');
 
-$('#status').html("<div class='alert alert-success'>Connected to chattr</div>");
-
 var from = $('#username').text();
 var to = 'all';//设置默认接收对象为"所有人"
+
 //发送用户上线信号
 server.emit('join', {user: from});
 server.on('online', function (data) {
