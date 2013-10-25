@@ -3,11 +3,9 @@
 <h2>Real time web chat</h2>
 
 <div class='row-fluid'>
-  <div id='users-online' class='span2 well'>
+  <div id='users_list' class='span2 well'>
     <h4>online</h4>
-    <ul>
-      <li>jack</li>
-      <li>tom</li>
+    <ul id="list">
     </ul>
   </div>
 
@@ -17,6 +15,7 @@
       <div id='status'>
       </div>
     </div>
+    <h3 id='username'><%= user %></h3>
     <div class='input-append'>
       <input type="text" id='chat_input' class='input-xxlarge' />
       <button id='chat_button' class='btn'>Send</button>

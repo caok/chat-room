@@ -7,7 +7,7 @@ exports.index = function(req, res){
   if(!req.session.user){
     res.redirect('/login');
   }else{
-    res.render('index', { title: 'chat-room' });
+    res.render('index', { title: 'chat-room', user: req.session.user });
   }
 };
 
