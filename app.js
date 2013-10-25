@@ -32,6 +32,7 @@ app.get('/', routes.index);
 server = http.createServer(app);
 io = socket.listen(server);
 
+//-----------socket聊天------------
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
