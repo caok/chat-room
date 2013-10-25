@@ -62,7 +62,7 @@ io.sockets.on('connection', function(client) {
   //用户上线
   client.on('join', function (data) {
     //将上线的用户名存储为 socket 对象的属性，以区分每个 socket 对象，方便后面使用
-    socket.name = data.user;
+    client.name = data.user;
     //users 对象中不存在该用户名则插入该用户名
     if (!users[data.user]) {
       users[data.user] = data.user;
@@ -71,11 +71,23 @@ io.sockets.on('connection', function(client) {
     io.sockets.emit('online', {users: users, user: data.user});
   });
 
-  //发消息
-  client.on('messages', function (message) {
-    client.get('nickname', function (err, name) {
-      client.broadcast.emit("messages", name + ": " + message);
-    });
+  //有人发话
+  client.on('say', function (data) {
+    if (data.to == 'all') {
+      //向其他所有用户广播该用户发话信息
+      client.broadcast.emit('say', data);
+    } else {
+      //向特定用户发送该用户发话信息
+      //clients 为存储所有连接对象的数组
+      var clients = io.sockets.clients();
+      //遍历找到该用户
+      clients.forEach(function (client) {
+        if (client.name == data.to) {
+          //触发该用户客户端的 say 事件
+          client.emit('say', data);
+        }
+      });
+    }
   });
 
   //用户下线

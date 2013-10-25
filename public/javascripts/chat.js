@@ -19,20 +19,37 @@ server.on('online', function (data) {
   showSayTo();
 });
 
-server.emit('join', {user: username});
+server.on('say', function (data) {
+  //对所有人说
+  if (data.to == 'all') {
+    insertMessage(data.from + "(" + now() + ")对所有人说：" + data.message, "alert-info");
+  }
+  //对你密语
+  if (data.to == from) {
+    insertMessage(data.from + "(" + now() + ")对你说：" + data.message, "");
+  }
+});
 
+//发话
 $('#chat_button').click(function() {
+  //获取要发送的消息
   var message = $('#chat_input').val();
-  server.emit('messages', message);
-  insertMessage("me: " + message);
+  if (message == "") return;
+
+  //把发送的信息先添加到自己的浏览器 DOM 中
+  if (to == "all"){
+    insertMessage("你(" + now() + ")对所有人说：" + message, "alert-info");
+  } else {
+    insertMessage("你(" + now() + ")对" + to + "说：" + message, "");
+  }
+  server.emit('say', {from: from, to: to, message: message});
   $('input#chat_input').val('');
-});
-server.on('messages', function(data) {
-  insertMessage(data);
+  $("input#chat_input").focus();
 });
 
-function insertMessage(data){
-  $('div#chat_content').append("<div class='alert'>" + data + "</div>");
+//在页面上显示消息
+function insertMessage(data, type){
+  $('div#chat_content').append("<div class='alert " + type + "'>" + data + "</div>");
 };
 
 //刷新用户在线列表
