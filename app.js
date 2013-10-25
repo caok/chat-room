@@ -19,15 +19,34 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.cookieParser());
+app.use(express.session({secret: 'chat room'}));
+app.use(app.router);
 
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+//存储在线用户
+var users = {};
+
+//-------------路径控制---------------
 app.get('/', routes.index);
+
+app.get('/login', routes.login);
+
+app.post('/login', function (req, res) {
+  if (users[req.body.name]) {
+    //存在，则不允许登陆
+    res.redirect('/login');
+  } else {
+    //不存在，把用户名存入 session 跳转到主页
+    req.session.user = req.body.username;
+    res.redirect('/');
+  }
+});
 
 server = http.createServer(app);
 io = socket.listen(server);
@@ -36,9 +55,6 @@ io = socket.listen(server);
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
-
-//存储在线用户
-var users = [];
 
 io.sockets.on('connection', function(client) {
   console.log('Client connected...');

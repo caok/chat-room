@@ -1,6 +1,6 @@
 var server = io.connect('http://' + window.location.hostname + ':3000');
 
-nickname = prompt("What is your nickname?");
+//nickname = prompt("What is your nickname?");
 $('#status').html("<div class='alert alert-success'>Connected to chattr</div>");
 server.emit('join', nickname);
 
