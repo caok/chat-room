@@ -43,6 +43,18 @@ server.on('offline', function (data) {
   showSayTo();
 });
 
+//服务器关闭
+server.on('disconnect', function() {
+  insertMessage("系统:连接服务器失败!", "alert-error")
+  $("#list").empty();
+});
+
+//重新启动服务器
+server.on('reconnect', function() {
+  insertMessage("系统:重新连接上服务器!", "alert-success")
+  server.emit('online', {user: from});
+});
+
 //发话
 $('#chat_button').click(function() {
   //获取要发送的消息
