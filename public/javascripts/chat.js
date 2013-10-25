@@ -1,6 +1,6 @@
 var server = io.connect('http://' + window.location.hostname + ':3000');
 
-var from = $('#username').text();
+var from = $('#from').text();
 var to = 'all';//设置默认接收对象为"所有人"
 
 //发送用户上线信号
@@ -28,6 +28,19 @@ server.on('say', function (data) {
   if (data.to == from) {
     insertMessage(data.from + "(" + now() + ")对你说：" + data.message, "");
   }
+});
+
+server.on('offline', function (data) {
+  //显示系统消息
+  insertMessage("系统(" + now() + "):" + "用户 " + data.user + " 下线了!", "alert-error")
+  //刷新用户在线列表
+  flushUsers(data.users);
+  //如果正对某人聊天，该人却下线了
+  if (data.user == to) {
+    to = "all";
+  }
+  //显示正在对谁说话
+  showSayTo();
 });
 
 //发话
@@ -78,7 +91,7 @@ function flushUsers(users) {
 
 //显示正在对谁说话
 function showSayTo() {
-  $("#from").html(from);
+  //$("#from").html(from);
   $("#to").html(to == "all" ? "所有人" : to);
 }
 

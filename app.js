@@ -90,11 +90,14 @@ io.sockets.on('connection', function(client) {
     }
   });
 
-  //用户下线
+  //有人下线
   client.on('disconnect', function() {
-    client.get('nickname', function (err, name) {
-      users.splice(users.indexOf(name), 1);
-      client.broadcast.emit("messages", name + " leave the chat.");
-    });
+    //若 users 对象中保存了该用户名
+    if (users[client.name]) {
+      //从 users 对象中删除该用户名
+      delete users[client.name];
+      //向其他所有用户广播该用户下线信息
+      client.broadcast.emit('offline', {users: users, user: client.name});
+    }
   });
 });
