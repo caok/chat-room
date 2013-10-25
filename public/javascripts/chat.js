@@ -52,7 +52,7 @@ server.on('disconnect', function() {
 //重新启动服务器
 server.on('reconnect', function() {
   insertMessage("系统:重新连接上服务器!", "alert-success")
-  server.emit('online', {user: from});
+  server.emit('join', {user: from});
 });
 
 //发话
