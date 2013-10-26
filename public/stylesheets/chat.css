@@ -1,5 +1,9 @@
+#container{
+  padding-top: 50px;
+}
+
 #chat_content{
-  height: 700px;
+  height: 500px;
   overflow-x:hidden;
   overflow-y:scroll;
 }

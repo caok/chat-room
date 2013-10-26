@@ -27,13 +27,13 @@ $(document).ready(function() {
     }
     //对你密语
     if (data.to == from) {
-      insertMessage(data.from + "(" + now() + ")对你说：" + data.message, "");
+      insertMessage(data.from + "(" + now() + ")对你说：" + data.message, "alert-success");
     }
   });
 
   server.on('offline', function (data) {
     //显示系统消息
-    insertMessage("系统(" + now() + "):" + "用户 " + data.user + " 下线了!", "alert-error")
+    insertMessage("系统(" + now() + "):" + "用户 " + data.user + " 下线了!", "alert-danger")
     //刷新用户在线列表
     flushUsers(data.users);
     //如果正对某人聊天，该人却下线了
@@ -46,7 +46,7 @@ $(document).ready(function() {
 
   //服务器关闭
   server.on('disconnect', function() {
-    insertMessage("系统:连接服务器失败!", "alert-error")
+    insertMessage("系统:连接服务器失败!", "alert-danger")
     $("#list").empty();
   });
 
@@ -66,7 +66,7 @@ $(document).ready(function() {
     if (to == "all"){
       insertMessage("你(" + now() + ")对所有人说：" + message, "alert-info");
     } else {
-      insertMessage("你(" + now() + ")对" + to + "说：" + message, "");
+      insertMessage("你(" + now() + ")对" + to + "说：" + message, "alert-success");
     }
     server.emit('say', {from: from, to: to, message: message});
     $('input#chat_input').val('');

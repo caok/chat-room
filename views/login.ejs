@@ -1,31 +1,27 @@
 <% include head %>
 
-<div class='container-fuild'>
-  <form class='form-horizontal' method='post'>
-    <fieldset>
-      <legend>login</legend>
-      <div class='control-group'>
-        <label class="control-label" for="username">username</label>
-        <div class='controls'>
-          <input id='username' class='input-xlarge' name="username" type="text" />
-        </div>
+<form class="form-horizontal" role="form" method='post'>
+  <div class="form-group">
+    <label for="username" class="col-lg-4 control-label">用户名</label>
+    <div class="col-lg-4">
+      <input type="text" class="form-control" id="username" name="username" placeholder="username">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-offset-4 col-lg-8">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="admin" name="admin">admin
+        </label>
       </div>
-
-<!------
-      <div class='control-group'>
-        <label class="control-label" for="password">password</label>
-        <div class='controls'>
-          <input id='password' class='input-xlarge' name="password" type="password" />
-        </div>
-      </div>
-------->
-
-      <div class='form-actions'>
-        <button class="btn btn-primary" type="submit">login</button>
-        <button class="btn btn-warning" type="reset">reset</button>
-      </div>
-    </fieldset>
-  </form>
-</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-offset-4 col-lg-8">
+      <button type="submit" class="btn btn-primary">登录</button>
+      <button type="reset" class="btn btn-warning">重置</button>
+    </div>
+  </div>
+</form>
 
 <% include footer %>
